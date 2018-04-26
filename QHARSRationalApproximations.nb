@@ -1,0 +1,3252 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    114761,       3244]
+NotebookOptionsPosition[    113978,       3222]
+NotebookOutlinePosition[    114357,       3238]
+CellTagsIndexPosition[    114314,       3235]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"<<", "SternBrocot`"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$RecursionLimit", "=", "Infinity"}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.7323801781711025`*^9, 3.732380193639473*^9}, 
+   3.7323824624101367`*^9, {3.7325556932379646`*^9, 3.7325557079589643`*^9}, {
+   3.732609622692461*^9, 3.7326096902570887`*^9}, {3.732609785263754*^9, 
+   3.7326097874538097`*^9}, {3.7326105586284394`*^9, 3.732610571012418*^9}, {
+   3.7326366797569513`*^9, 3.7326367333194447`*^9}, {3.7326391703244085`*^9, 
+   3.7326391791628923`*^9}, {3.7327267725637913`*^9, 3.732726778453084*^9}, {
+   3.732726831714634*^9, 3.7327268605772157`*^9}, {3.732726981212645*^9, 
+   3.732726997246436*^9}, {3.73276968082696*^9, 
+   3.7327696880906878`*^9}},ExpressionUUID->"73eb1f07-3fcf-4624-a9cf-\
+85015922f5a4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"h", "=", "6.62607015`20*^-34"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"e", "=", "1.602176634`20*^-19"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rK90", "=", "25812.807"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rK", "=", "25812.8074593045"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rH90", "=", 
+   RowBox[{"rK90", "/", "2"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rH", "=", 
+   RowBox[{"rK", "/", "2"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"rK", "-", "rK90"}], ")"}], "/", "rK90"}]}], "Input",
+ CellChangeTimes->{{3.7327287819665575`*^9, 3.732728785392806*^9}, {
+  3.732862876842538*^9, 3.7328628960629964`*^9}, {3.732862987101342*^9, 
+  3.7328629934847417`*^9}, {3.7330371049227633`*^9, 3.7330371261082525`*^9}, {
+  3.7336552463624177`*^9, 3.73365525787926*^9}, {3.7336552974782476`*^9, 
+  3.733655353538677*^9}, {3.7336553968723993`*^9, 3.7336553987544074`*^9}, {
+  3.7336557474612894`*^9, 3.733655753779177*^9}, {3.733673004940426*^9, 
+  3.7336730058047733`*^9}},ExpressionUUID->"a72a5905-290d-45a6-952c-\
+e8b80bcff0df"],
+
+Cell[BoxData["1.7793667220344415`*^-8"], "Output",
+ CellChangeTimes->{
+  3.7336730088028464`*^9},ExpressionUUID->"29dbf340-50f2-4fa0-83b4-\
+0728cfab8efd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"orderMax", "=", "200"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"partMax", "=", 
+   RowBox[{"2", "^", "15"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tol", "=", "2*^-6"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"approximantsList", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"r0", "=", 
+       RowBox[{"rval", "/", "rH"}]}], ";", 
+      RowBox[{"r090", "=", 
+       RowBox[{"rval", "/", "rH90"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"approximantsList", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"approximantsList", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"ToString", "[", "rval", "]"}], "<>", 
+           "\"\< \[CapitalOmega]\>\""}], "}"}], ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"ToString", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "]"}], "<>", "\"\</\>\"", "<>", 
+              RowBox[{"ToString", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "]"}]}], ",", 
+             RowBox[{"PaddedForm", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "/", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "-", "r090"}], ")"}], 
+                "/", "r090"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"5", ",", "4"}], "}"}]}], "]"}], ",", 
+             RowBox[{"PaddedForm", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "/", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "-", "r0"}], ")"}], "/",
+                 "r0"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"5", ",", "4"}], "}"}]}], "]"}]}], "}"}], "&"}], "/@", 
+          RowBox[{"Select", "[", 
+           RowBox[{
+            RowBox[{"rationalApproximant", "[", 
+             RowBox[{"r0", ",", 
+              RowBox[{"Range", "[", "orderMax", "]"}]}], "]"}], ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"Abs", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "/", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "-", "r0"}], "]"}], "/",
+                 "r0"}], "<", "tol"}], "&&", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "partMax"}], "&&", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], "\[LessEqual]", "partMax"}]}],
+              "&"}]}], "]"}]}]}], "]"}]}]}], ")"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"rval", ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "100", ",", "1*^3", ",", "1*^4", ",", "1*^5", ",", "1*^6", ",", 
+        "1*^6"}], "}"}]}], "}"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"TableForm", "[", "approximantsList", "]"}]}], "Input",
+ CellChangeTimes->{{3.732515040111641*^9, 3.7325150818818083`*^9}, {
+   3.7325218698705177`*^9, 3.7325218987306585`*^9}, {3.732521967733362*^9, 
+   3.7325219799434743`*^9}, {3.7325221090539007`*^9, 3.732522114443905*^9}, {
+   3.7325221782382793`*^9, 3.732522225583412*^9}, {3.7325222857760324`*^9, 
+   3.7325224448342857`*^9}, 3.732522546046232*^9, 3.732551863045684*^9, {
+   3.7325556190468755`*^9, 3.7325556440126057`*^9}, {3.7325557342622128`*^9, 
+   3.732555839933296*^9}, {3.7325558778216934`*^9, 3.732555913943109*^9}, {
+   3.7325564569096565`*^9, 3.7325564601096587`*^9}, {3.732556494423429*^9, 
+   3.732556504743531*^9}, {3.7325565436092668`*^9, 3.7325565811492825`*^9}, {
+   3.732556714486923*^9, 3.7325567385189295`*^9}, {3.7325569102491975`*^9, 
+   3.732557001342224*^9}, {3.7325570681431136`*^9, 3.73255715705967*^9}, {
+   3.7325571957899685`*^9, 3.732557197189968*^9}, {3.732557258630397*^9, 
+   3.732557262610528*^9}, {3.7325573466134415`*^9, 3.732557348853446*^9}, {
+   3.732557454902857*^9, 3.7325575609931*^9}, {3.732557621984043*^9, 
+   3.732557622844149*^9}, {3.732557700650832*^9, 3.7325577010084376`*^9}, {
+   3.732557740937421*^9, 3.7325577519172945`*^9}, {3.7326094656352053`*^9, 
+   3.732609524290717*^9}, {3.732610616417164*^9, 3.7326106176575003`*^9}, {
+   3.7326107783208427`*^9, 3.7326107825120287`*^9}, 3.732610858579339*^9, {
+   3.732611270753112*^9, 3.7326112890231915`*^9}, {3.732634510361019*^9, 
+   3.7326345250763235`*^9}, {3.7326387751718645`*^9, 
+   3.7326387889287443`*^9}, {3.7326392572808204`*^9, 3.73263928273102*^9}, {
+   3.7326393207677813`*^9, 3.7326393308328037`*^9}, {3.7326394290201244`*^9, 
+   3.7326395387645965`*^9}, {3.7326396661403365`*^9, 
+   3.7326397562026167`*^9}, {3.7326398336179104`*^9, 
+   3.7326398764476166`*^9}, {3.7326399777251215`*^9, 
+   3.7326400189805613`*^9}, {3.7326400613538485`*^9, 
+   3.7326400792881117`*^9}, {3.7326401332711353`*^9, 3.732640185154999*^9}, {
+   3.7326402668386393`*^9, 3.7326402939181676`*^9}, {3.7326403254752064`*^9, 
+   3.732640453695578*^9}, {3.7326405107958174`*^9, 3.7326405128885717`*^9}, {
+   3.7326405578758183`*^9, 3.7326405782199903`*^9}, {3.7326406901943617`*^9, 
+   3.732640696383712*^9}, {3.732640743840123*^9, 3.732640786650318*^9}, {
+   3.732640850120659*^9, 3.7326408637681665`*^9}, {3.7326410594523206`*^9, 
+   3.73264127330777*^9}, {3.7326413756050086`*^9, 3.7326414009051433`*^9}, {
+   3.7326414359852576`*^9, 3.7326415063946505`*^9}, {3.7326416757137184`*^9, 
+   3.732641749277358*^9}, {3.7326418320435324`*^9, 3.7326419083041177`*^9}, {
+   3.7326419515428867`*^9, 3.7326419518249683`*^9}, {3.7326420239951563`*^9, 
+   3.732642024127887*^9}, {3.732716388332242*^9, 3.732716390393471*^9}, {
+   3.732769369027445*^9, 3.7327693922815447`*^9}, {3.732769714339245*^9, 
+   3.7327697144092827`*^9}, {3.7328068912840652`*^9, 
+   3.7328068913727527`*^9}, {3.7328622935108414`*^9, 
+   3.7328622975229826`*^9}, {3.7328629771446753`*^9, 3.732862979275792*^9}, {
+   3.7328634422436905`*^9, 3.7328634423238196`*^9}, {3.733037226607516*^9, 
+   3.733037230027478*^9}, {3.733655434125661*^9, 3.733655434181789*^9}, {
+   3.7336555339840713`*^9, 3.7336555852879114`*^9}, {3.733655651855132*^9, 
+   3.7336556868837624`*^9}, {3.7336716943408327`*^9, 
+   3.7336716998797398`*^9}, {3.73367183954152*^9, 3.7336718419570208`*^9}, {
+   3.7336719081270905`*^9, 3.7336719269086304`*^9}, {3.7336720062140207`*^9, 
+   3.7336720450116105`*^9}, {3.733672206578144*^9, 3.7336722274050407`*^9}, 
+   3.733672921454342*^9, {3.733677893745796*^9, 3.733677930625383*^9}, {
+   3.7336780073561063`*^9, 3.7336780129563236`*^9}, {3.7336781687378407`*^9, 
+   3.7336781753506594`*^9}},ExpressionUUID->"3cae23fb-7963-477c-8f58-\
+91303ce52e9a"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {"\<\"100 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"47/6066\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5900\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.590009891140085*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6078\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.6078035867997674`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"78/10067\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-5.2349\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       -5.234925996677873*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-5.0570\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       -5.056989416150654*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"125/16133\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7118\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7118328890316835`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8898\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8897696109608877`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"203/26200\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.416030542764735*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.6366638667909352`*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1000 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"203/2620\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.416030538286927*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.6366638690298388`*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"235/3033\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5900\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.590009891095307*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6078\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.607803586687822*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"438/5653\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.3725\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.372545550536156*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.5505\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.550482372518525*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"641/8273\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.6128\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.612836939627392*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.7908\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.790773712504424*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"844/10893\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.1807\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.18066648234785*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.3586\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.358603229741318*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1047/13513\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.3039\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.303855545788237*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4818\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.481792277580023*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1250/16133\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7118\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.711832888360013*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8898\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.889769609617545*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1453/18753\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2852\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.285234362422486*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4632\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.4631710760892657`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1656/21373\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9632\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.9632246283771628`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1412\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1411613363142083`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1859/23993\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7115\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7115408660787054`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8895\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.889477569537374*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2062/26613\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5094\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5094126922059843`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6873\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6873493920680513`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2265/29233\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3435\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3435158886520688`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5215\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5214525855622234`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2468/31853\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2049\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.204910054552567*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3828\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3828467489964156`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10000 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"203/262\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.416030541869174*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.636663869029839*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1944/2509\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9292\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.9292148265350126`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9470\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.9470085281990495`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2147/2771\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7436\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.7435763261860472`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7614\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.761370024546895*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2350/3033\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5900\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.5900098911311294`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6078\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.607803586759467*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2553/3295\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4609\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.460864946861297*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4787\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.4786586401916721`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2756/3557\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3507\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.350745009701228*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3685\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.368538701072166*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"2959/3819\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2557\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2557344853929908`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2735\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2735281750733429`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"3162/4081\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1729\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.1729233029684594`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1907\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.190716991175297*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"3365/4343\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1001\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.1001036149584197`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1179\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.117897301869528*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"3568/4605\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.0356\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.0355700325521446`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.0534\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.0533637183149635`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"3771/4867\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.7798\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.779843844689978*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.9578\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.95778069207157*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"3974/5129\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.2628\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.262819261485372*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.4408\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.440756099667201*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4177/5391\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.7960\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.796048969573472*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.9740\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.973985799449746*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4380/5653\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.3725\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.372545550536155*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.5505\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.55048237287675*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4583/5915\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.9866\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.986559593179497*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.1645\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.164496408651986*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4786/6177\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.6333\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.63331714351723*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.8113\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.811253952704241*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4989/6439\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.3088\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.308821244011369*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.4868\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.486758047424408*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"5192/6701\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.0097\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.009700043451307*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.1876\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.187636841541884*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"5395/6963\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.7331\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.733089184634011*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.9110\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.911025977802664*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"5598/7225\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.4765\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.476539790778293*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.6545\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.654476579381992*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"5801/7487\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.2379\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.23794577171137*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.4159\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.415882556069606*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6004/7749\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.0155\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.015485868850738*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.1934\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.193422649250597*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6207/8011\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.8076\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.807577080267008*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.9855\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.985513856967407*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6410/8273\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.6128\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.612836938194493*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.7908\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.790773711429751*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6613/8535\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.4301\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.43005272320407*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.6080\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.607989493186926*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6816/8797\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.2582\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.258156189304198*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.4361\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.436092956228385*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7019/9059\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.0962\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.096202670845943*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.2741\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.274139434888384*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7222/9321\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.9434\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.943353715791552*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.1213\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.121290477114249*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7425/9583\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.7989\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.798862567585496*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.9768\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.976799326337166*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7628/9845\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.6621\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.6620619597239166`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.8400\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.839998716041401*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7831/10107\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.5324\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.532353813213453*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.7103\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.710290567222954*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8034/10369\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.4092\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.409200500188279*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.5871\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.58713725200643*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8237/10631\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.2921\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.2921173914043073`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.4701\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.470054141139121*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8440/10893\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.1807\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.1806664827060744`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.3586\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.358603230457767*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8643/11155\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.0745\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.074450918488162*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.2524\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.252387664349891*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8846/11417\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.9731\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.9731102731600006`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.1510\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.151047017218508*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9049/11679\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.8763\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.876316464518965*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.0543\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.0542532068551553`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9252/11941\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.7838\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.783770203027564*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.9617\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.961706943717017*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9455/12203\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.6952\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.695197901051087*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.8731\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.873134640164514*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9658/12465\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.6103\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.610348976142379*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.7883\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.788285713746032*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9861/12727\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.5290\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.5289934781617014`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.7069\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.706930214317742*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10064/12989\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4509\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.450920008707919*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.6289\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.628856743474746*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10267/13251\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.3759\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.3759338913069433`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.5539\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.553870624739493*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10470/13513\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.3039\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.3038555450717877`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4818\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.4817922772217985`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10673/13775\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.2345\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.234519054669727*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4125\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.4124557855859876`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10876/14037\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.1678\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.167770890743821*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.3457\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.345707620472387*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11079/14299\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.1035\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.103468773624298*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.2814\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.281405502208694*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11282/14561\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.0415\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.0414806660008166`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.2194\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.2194173934822164`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11485/14823\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9817\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.981683868763425*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.1596\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.15962059518082*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11688/15085\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9240\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.9239642013845466`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.1019\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.1019009267748974`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11891/15347\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8682\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8682152854696613`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.0462\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.0461520098680343`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12094/15609\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8143\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8143378813252395`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9923\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.9922746047649363`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12297/15871\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7622\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.762239303336099*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9402\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.9401760258487706`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12500/16133\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7118\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7118328883600123`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8898\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8897696099757693`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12703/16395\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6630\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.6630375099750707`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8410\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8409742307225787`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12906/16657\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6158\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.6157771500429913`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7937\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7937138699495644`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13109/16919\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5700\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5699804946317053`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7479\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.747917213723388*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13312/17181\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5256\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.525580582955189*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7035\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7035173012568345`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13515/17443\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4825\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.482514474940986*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6605\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.660451192476327*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13718/17705\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4407\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.4407229589188795`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6187\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.6186596757105964`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13921/17967\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4002\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.4001502750714633`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5781\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5780869911412434`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14124/18229\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3607\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.3607438689755716`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5387\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5386805843441676`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14327/18491\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3225\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.3224541666371959`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5004\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.500390881324477*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14530/18753\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2852\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2852343609895873`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4632\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.4631710750145916`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14733/19015\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2490\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.249040229915132*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4270\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.4269769432961103`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14936/19277\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2138\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2138299514014266`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3918\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.391766664155885*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15139/19539\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1796\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1795639487882251`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3575\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.3575006609329655`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15342/19801\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1462\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1462047360143878`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3241\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.3241414475655455`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15545/20063\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1137\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1137167915228003`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2917\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2916535024958781`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15748/20325\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0821\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.082066419269207*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2600\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2600031296791088`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15951/20587\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0512\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.051221644120611*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2292\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2291583539816713`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16154/20849\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0212\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0211520929246872`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1991\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1990888022506997`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16357/21111\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9918\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.9918289028042687`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1698\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1697656116085142`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16560/21373\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9632\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.963224628018938*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1412\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1411613363142086`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16763/21635\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9353\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.935313149692411*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1132\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.113249857491034*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16966/21897\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9081\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.908069597003114*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0860\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.086006304316974*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17169/22159\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8815\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8814702827037426`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0594\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0594069895443034`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17372/22421\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8555\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8554926171473467`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0334\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0334293235256697`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17575/22683\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8301\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8301150638674712`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0081\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0080517697942346`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17778/22945\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8053\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.80531706220163*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9833\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.983253767687146*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17981/23207\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7811\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7810789843043474`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9590\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.959015689358579*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18184/23469\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7574\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7573820778312118`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9353\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.9353187824637885`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18387/23731\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7342\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7342084186532225`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.9121\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.9121451228734546`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18590/23993\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7115\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7115408650040313`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8895\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8894775688209248`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18793/24255\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6894\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6893630173587833`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8673\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8672997207810513`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18996/24517\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6677\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6676591740142566`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8456\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8455958770503337`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"19199/24779\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6464\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6464143009979932`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8244\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8243510036560464`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"19402/25041\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6256\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6256139919471364`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8036\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.8035506942350757`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"19605/25303\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6052\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6052444365846603`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7832\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7831811385101502`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"19808/25565\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5853\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.585292390628499*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7632\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.763229092198969*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20011/25827\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5657\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.565745149999372*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7437\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.743681851222025*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20214/26089\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5466\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.546590516431216*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7245\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.724527217313038*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20417/26351\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5278\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5278167802764014`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.7058\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.7057534808241694`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20620/26613\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5094\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5094126918477595`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6873\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6873493920680516`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20823/26875\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4914\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4913674413580028`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6693\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6693041412572036`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21026/27137\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4737\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.473670633127548*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6516\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6516073327118577`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21229/27399\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4563\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4563122726884298`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6342\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6342489719638704`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21432/27661\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4393\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.439282743857921*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6172\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.617219442830344*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21635/27923\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4226\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4225727886779537`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.6005\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.6005094873530452`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21838/28185\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4062\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4061734959519284`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5841\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5841101943352164`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22041/28447\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3901\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3900762811841348`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5680\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.5680129792809942`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22244/28709\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3743\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3742728751165611`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5522\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.55220957293222*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22447/28971\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3588\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3587553065341115`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.536692004073656*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22650/29233\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3435\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3435158879356195`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5215\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.521452585203999*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22853/29495\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3285\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3285472098022536`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.5065\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.506483906804285*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23056/29757\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3138\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3138421205369356`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4918\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4917788172773098`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23259/30019\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2994\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.299393716434052*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4773\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.477330412917336*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23462/30281\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2852\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2851953359478573`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4631\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4631320321785003`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23665/30543\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2712\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2712405453634892`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4492\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.449177241345825*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23868/30805\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2575\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2575231287666769`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4355\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4354598245049296`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24071/31067\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2440\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2440370808792494`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4220\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.421973776377536*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24274/31329\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2308\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2307765955959456`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4087\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.4087132908582794`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24477/31591\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2177\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.217736063118617*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3957\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3956727581489118`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24680/31853\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2049\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.2049100541943426`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3828\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.382846748996416*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24883/32115\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1923\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.1922933201154294`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3702\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3702300146930048`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"25086/32377\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1799\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.1798807783904263`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3578\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.357817472747137*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"25289/32639\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.1677\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.1676675127441228`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.3456\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       1.3456042068835149`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"100000 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"1015/131\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.416030536137579*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.6366638632982445`*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"4091/528\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8318\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.83178977268496*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.8496\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.849583472615448*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"5106/659\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4609\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.4608649468326389`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.4787\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.4786586401630143`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6121/790\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2130\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2129556962231761`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2307\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2307493851423367`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"7136/921\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.0356\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.0355700325234865`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.0534\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.0533637182863057`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"8151/1052\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.0236\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.023621672270947*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 9.2016\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       9.201558506196574*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"9166/1183\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.9866\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.986559593466077*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 8.1645\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       8.164496408938565*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10181/1314\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.1563\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.156278538656291*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 7.3342\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       7.334215339355035*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"11196/1445\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.4765\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.476539791638032*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.6545\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.654476580241731*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"12211/1576\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.9098\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.909803299650793*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 6.0877\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       6.087740078170171*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"13226/1707\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.4301\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.43005272349065*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.6080\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.607989493473506*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"14241/1838\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.0187\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.018688791295338*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 5.1966\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       5.196625553958522*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"15256/1969\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.6621\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.662061960583656*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.8400\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.839998716901141*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16271/2100\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.3499\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.349928570854387*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.5279\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.5278653216178736`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"17286/2231\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.0745\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.074450918774742*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.2524\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.252387664636471*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"18301/2362\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.8295\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.829530059309315*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.0075\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.0074668008130035`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"19316/2493\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.6103\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.6103489770021183`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.7883\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.7882857146057715`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"20331/2624\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4131\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.413052591053843*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.5910\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.5909893251468694`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"21346/2755\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.2345\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.2345190555294663`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.4125\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.4124557864457266`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"22361/2886\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.0722\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.072193347096284*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.2501\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.2501300751241753`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"23376/3017\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9240\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.923964201957706*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 3.1019\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       3.101900927348057*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"24391/3148\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7881\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7880717913285275`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.9660\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.966008514300854*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"25406/3279\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6630\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.6630375105482304`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.8410\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.8409742312957384`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"26421/3410\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5476\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.547609970265702*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7255\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7255466889593304`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"27436/3541\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4407\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.440722959778619*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.6187\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.618659676570336*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"28451/3672\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3415\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.3414624181467937`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5194\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5193991331723016`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"29466/3803\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2490\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.2490402304882916`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.4270\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.42697694386927*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"30481/3934\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1628\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1627732583676756`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.3407\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.340709970213648*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"31496/4065\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0821\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0820664201289463`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.2600\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.260003130538848*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"32511/4196\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.0064\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.0063989511171294`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.1843\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.1843356601806295`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1000000 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"4029/52\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.9288\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       -1.928817307761181*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.9110\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       -1.9110236747686105`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6121/79\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2130\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.212955696269029*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2307\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2307493851652634`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10150/131\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.4160305430154926`*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.636663872468796*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16271/210\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.3499\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.34992857039586*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.5279\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.527865320930083*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"26421/341\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5476\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5476099709534934`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7255\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7255466894178585`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"1000000 \[CapitalOmega]\"\>", "\<\"\"\>", "\<\"\"\>"},
+    {"\<\"4029/52\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.9288\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       -1.928817307761181*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.9110\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       -1.9110236747686105`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"6121/79\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2130\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.212955696269029*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 1.2307\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-6\"\>"]}],
+       1.2307493851652634`*^-6,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"10150/131\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-3.4160\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -3.4160305430154926`*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\"-1.6367\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-8\"\>"]}],
+       -1.636663872468796*^-8,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"16271/210\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.3499\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.34992857039586*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 4.5279\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       4.527865320930083*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]},
+    {"\<\"26421/341\"\>", 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.5476\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.5476099709534934`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ], 
+     TagBox[
+      InterpretationBox[
+       RowBox[{"\<\" 2.7255\"\>", "\[Times]", 
+        SuperscriptBox["10", "\<\"-7\"\>"]}],
+       2.7255466894178585`*^-7,
+       AutoDelete->True],
+      PaddedForm[#, {5, 4}]& ]}
+   },
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}},
+   GridBoxSpacings->{"Columns" -> {
+       Offset[0.27999999999999997`], {
+        Offset[2.0999999999999996`]}, 
+       Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+       Offset[0.2], {
+        Offset[0.4]}, 
+       Offset[0.2]}, "RowsIndexed" -> {}}],
+  TableForm[{"100 \[CapitalOmega]", {"47/6066", 
+     PaddedForm[1.590009891140085*^-6, {5, 4}], 
+     PaddedForm[1.6078035867997674`*^-6, {5, 4}]}, {"78/10067", 
+     PaddedForm[-5.234925996677873*^-7, {5, 4}], 
+     PaddedForm[-5.056989416150654*^-7, {5, 4}]}, {"125/16133", 
+     PaddedForm[2.7118328890316835`*^-7, {5, 4}], 
+     PaddedForm[2.8897696109608877`*^-7, {5, 4}]}, {"203/26200", 
+     PaddedForm[-3.416030542764735*^-8, {5, 4}], 
+     PaddedForm[-1.6366638667909352`*^-8, {5, 4}]}, "1000 \[CapitalOmega]", {
+    "203/2620", 
+     PaddedForm[-3.416030538286927*^-8, {5, 4}], 
+     PaddedForm[-1.6366638690298388`*^-8, {5, 4}]}, {"235/3033", 
+     PaddedForm[1.590009891095307*^-6, {5, 4}], 
+     PaddedForm[1.607803586687822*^-6, {5, 4}]}, {"438/5653", 
+     PaddedForm[8.372545550536156*^-7, {5, 4}], 
+     PaddedForm[8.550482372518525*^-7, {5, 4}]}, {"641/8273", 
+     PaddedForm[5.612836939627392*^-7, {5, 4}], 
+     PaddedForm[5.790773712504424*^-7, {5, 4}]}, {"844/10893", 
+     PaddedForm[4.18066648234785*^-7, {5, 4}], 
+     PaddedForm[4.358603229741318*^-7, {5, 4}]}, {"1047/13513", 
+     PaddedForm[3.303855545788237*^-7, {5, 4}], 
+     PaddedForm[3.481792277580023*^-7, {5, 4}]}, {"1250/16133", 
+     PaddedForm[2.711832888360013*^-7, {5, 4}], 
+     PaddedForm[2.889769609617545*^-7, {5, 4}]}, {"1453/18753", 
+     PaddedForm[2.285234362422486*^-7, {5, 4}], 
+     PaddedForm[2.4631710760892657`*^-7, {5, 4}]}, {"1656/21373", 
+     PaddedForm[1.9632246283771628`*^-7, {5, 4}], 
+     PaddedForm[2.1411613363142083`*^-7, {5, 4}]}, {"1859/23993", 
+     PaddedForm[1.7115408660787054`*^-7, {5, 4}], 
+     PaddedForm[1.889477569537374*^-7, {5, 4}]}, {"2062/26613", 
+     PaddedForm[1.5094126922059843`*^-7, {5, 4}], 
+     PaddedForm[1.6873493920680513`*^-7, {5, 4}]}, {"2265/29233", 
+     PaddedForm[1.3435158886520688`*^-7, {5, 4}], 
+     PaddedForm[1.5214525855622234`*^-7, {5, 4}]}, {"2468/31853", 
+     PaddedForm[1.204910054552567*^-7, {5, 4}], 
+     PaddedForm[1.3828467489964156`*^-7, {5, 4}]}, "10000 \[CapitalOmega]", {
+    "203/262", 
+     PaddedForm[-3.416030541869174*^-8, {5, 4}], 
+     PaddedForm[-1.636663869029839*^-8, {5, 4}]}, {"1944/2509", 
+     PaddedForm[1.9292148265350126`*^-6, {5, 4}], 
+     PaddedForm[1.9470085281990495`*^-6, {5, 4}]}, {"2147/2771", 
+     PaddedForm[1.7435763261860472`*^-6, {5, 4}], 
+     PaddedForm[1.761370024546895*^-6, {5, 4}]}, {"2350/3033", 
+     PaddedForm[1.5900098911311294`*^-6, {5, 4}], 
+     PaddedForm[1.607803586759467*^-6, {5, 4}]}, {"2553/3295", 
+     PaddedForm[1.460864946861297*^-6, {5, 4}], 
+     PaddedForm[1.4786586401916721`*^-6, {5, 4}]}, {"2756/3557", 
+     PaddedForm[1.350745009701228*^-6, {5, 4}], 
+     PaddedForm[1.368538701072166*^-6, {5, 4}]}, {"2959/3819", 
+     PaddedForm[1.2557344853929908`*^-6, {5, 4}], 
+     PaddedForm[1.2735281750733429`*^-6, {5, 4}]}, {"3162/4081", 
+     PaddedForm[1.1729233029684594`*^-6, {5, 4}], 
+     PaddedForm[1.190716991175297*^-6, {5, 4}]}, {"3365/4343", 
+     PaddedForm[1.1001036149584197`*^-6, {5, 4}], 
+     PaddedForm[1.117897301869528*^-6, {5, 4}]}, {"3568/4605", 
+     PaddedForm[1.0355700325521446`*^-6, {5, 4}], 
+     PaddedForm[1.0533637183149635`*^-6, {5, 4}]}, {"3771/4867", 
+     PaddedForm[9.779843844689978*^-7, {5, 4}], 
+     PaddedForm[9.95778069207157*^-7, {5, 4}]}, {"3974/5129", 
+     PaddedForm[9.262819261485372*^-7, {5, 4}], 
+     PaddedForm[9.440756099667201*^-7, {5, 4}]}, {"4177/5391", 
+     PaddedForm[8.796048969573472*^-7, {5, 4}], 
+     PaddedForm[8.973985799449746*^-7, {5, 4}]}, {"4380/5653", 
+     PaddedForm[8.372545550536155*^-7, {5, 4}], 
+     PaddedForm[8.55048237287675*^-7, {5, 4}]}, {"4583/5915", 
+     PaddedForm[7.986559593179497*^-7, {5, 4}], 
+     PaddedForm[8.164496408651986*^-7, {5, 4}]}, {"4786/6177", 
+     PaddedForm[7.63331714351723*^-7, {5, 4}], 
+     PaddedForm[7.811253952704241*^-7, {5, 4}]}, {"4989/6439", 
+     PaddedForm[7.308821244011369*^-7, {5, 4}], 
+     PaddedForm[7.486758047424408*^-7, {5, 4}]}, {"5192/6701", 
+     PaddedForm[7.009700043451307*^-7, {5, 4}], 
+     PaddedForm[7.187636841541884*^-7, {5, 4}]}, {"5395/6963", 
+     PaddedForm[6.733089184634011*^-7, {5, 4}], 
+     PaddedForm[6.911025977802664*^-7, {5, 4}]}, {"5598/7225", 
+     PaddedForm[6.476539790778293*^-7, {5, 4}], 
+     PaddedForm[6.654476579381992*^-7, {5, 4}]}, {"5801/7487", 
+     PaddedForm[6.23794577171137*^-7, {5, 4}], 
+     PaddedForm[6.415882556069606*^-7, {5, 4}]}, {"6004/7749", 
+     PaddedForm[6.015485868850738*^-7, {5, 4}], 
+     PaddedForm[6.193422649250597*^-7, {5, 4}]}, {"6207/8011", 
+     PaddedForm[5.807577080267008*^-7, {5, 4}], 
+     PaddedForm[5.985513856967407*^-7, {5, 4}]}, {"6410/8273", 
+     PaddedForm[5.612836938194493*^-7, {5, 4}], 
+     PaddedForm[5.790773711429751*^-7, {5, 4}]}, {"6613/8535", 
+     PaddedForm[5.43005272320407*^-7, {5, 4}], 
+     PaddedForm[5.607989493186926*^-7, {5, 4}]}, {"6816/8797", 
+     PaddedForm[5.258156189304198*^-7, {5, 4}], 
+     PaddedForm[5.436092956228385*^-7, {5, 4}]}, {"7019/9059", 
+     PaddedForm[5.096202670845943*^-7, {5, 4}], 
+     PaddedForm[5.274139434888384*^-7, {5, 4}]}, {"7222/9321", 
+     PaddedForm[4.943353715791552*^-7, {5, 4}], 
+     PaddedForm[5.121290477114249*^-7, {5, 4}]}, {"7425/9583", 
+     PaddedForm[4.798862567585496*^-7, {5, 4}], 
+     PaddedForm[4.976799326337166*^-7, {5, 4}]}, {"7628/9845", 
+     PaddedForm[4.6620619597239166`*^-7, {5, 4}], 
+     PaddedForm[4.839998716041401*^-7, {5, 4}]}, {"7831/10107", 
+     PaddedForm[4.532353813213453*^-7, {5, 4}], 
+     PaddedForm[4.710290567222954*^-7, {5, 4}]}, {"8034/10369", 
+     PaddedForm[4.409200500188279*^-7, {5, 4}], 
+     PaddedForm[4.58713725200643*^-7, {5, 4}]}, {"8237/10631", 
+     PaddedForm[4.2921173914043073`*^-7, {5, 4}], 
+     PaddedForm[4.470054141139121*^-7, {5, 4}]}, {"8440/10893", 
+     PaddedForm[4.1806664827060744`*^-7, {5, 4}], 
+     PaddedForm[4.358603230457767*^-7, {5, 4}]}, {"8643/11155", 
+     PaddedForm[4.074450918488162*^-7, {5, 4}], 
+     PaddedForm[4.252387664349891*^-7, {5, 4}]}, {"8846/11417", 
+     PaddedForm[3.9731102731600006`*^-7, {5, 4}], 
+     PaddedForm[4.151047017218508*^-7, {5, 4}]}, {"9049/11679", 
+     PaddedForm[3.876316464518965*^-7, {5, 4}], 
+     PaddedForm[4.0542532068551553`*^-7, {5, 4}]}, {"9252/11941", 
+     PaddedForm[3.783770203027564*^-7, {5, 4}], 
+     PaddedForm[3.961706943717017*^-7, {5, 4}]}, {"9455/12203", 
+     PaddedForm[3.695197901051087*^-7, {5, 4}], 
+     PaddedForm[3.873134640164514*^-7, {5, 4}]}, {"9658/12465", 
+     PaddedForm[3.610348976142379*^-7, {5, 4}], 
+     PaddedForm[3.788285713746032*^-7, {5, 4}]}, {"9861/12727", 
+     PaddedForm[3.5289934781617014`*^-7, {5, 4}], 
+     PaddedForm[3.706930214317742*^-7, {5, 4}]}, {"10064/12989", 
+     PaddedForm[3.450920008707919*^-7, {5, 4}], 
+     PaddedForm[3.628856743474746*^-7, {5, 4}]}, {"10267/13251", 
+     PaddedForm[3.3759338913069433`*^-7, {5, 4}], 
+     PaddedForm[3.553870624739493*^-7, {5, 4}]}, {"10470/13513", 
+     PaddedForm[3.3038555450717877`*^-7, {5, 4}], 
+     PaddedForm[3.4817922772217985`*^-7, {5, 4}]}, {"10673/13775", 
+     PaddedForm[3.234519054669727*^-7, {5, 4}], 
+     PaddedForm[3.4124557855859876`*^-7, {5, 4}]}, {"10876/14037", 
+     PaddedForm[3.167770890743821*^-7, {5, 4}], 
+     PaddedForm[3.345707620472387*^-7, {5, 4}]}, {"11079/14299", 
+     PaddedForm[3.103468773624298*^-7, {5, 4}], 
+     PaddedForm[3.281405502208694*^-7, {5, 4}]}, {"11282/14561", 
+     PaddedForm[3.0414806660008166`*^-7, {5, 4}], 
+     PaddedForm[3.2194173934822164`*^-7, {5, 4}]}, {"11485/14823", 
+     PaddedForm[2.981683868763425*^-7, {5, 4}], 
+     PaddedForm[3.15962059518082*^-7, {5, 4}]}, {"11688/15085", 
+     PaddedForm[2.9239642013845466`*^-7, {5, 4}], 
+     PaddedForm[3.1019009267748974`*^-7, {5, 4}]}, {"11891/15347", 
+     PaddedForm[2.8682152854696613`*^-7, {5, 4}], 
+     PaddedForm[3.0461520098680343`*^-7, {5, 4}]}, {"12094/15609", 
+     PaddedForm[2.8143378813252395`*^-7, {5, 4}], 
+     PaddedForm[2.9922746047649363`*^-7, {5, 4}]}, {"12297/15871", 
+     PaddedForm[2.762239303336099*^-7, {5, 4}], 
+     PaddedForm[2.9401760258487706`*^-7, {5, 4}]}, {"12500/16133", 
+     PaddedForm[2.7118328883600123`*^-7, {5, 4}], 
+     PaddedForm[2.8897696099757693`*^-7, {5, 4}]}, {"12703/16395", 
+     PaddedForm[2.6630375099750707`*^-7, {5, 4}], 
+     PaddedForm[2.8409742307225787`*^-7, {5, 4}]}, {"12906/16657", 
+     PaddedForm[2.6157771500429913`*^-7, {5, 4}], 
+     PaddedForm[2.7937138699495644`*^-7, {5, 4}]}, {"13109/16919", 
+     PaddedForm[2.5699804946317053`*^-7, {5, 4}], 
+     PaddedForm[2.747917213723388*^-7, {5, 4}]}, {"13312/17181", 
+     PaddedForm[2.525580582955189*^-7, {5, 4}], 
+     PaddedForm[2.7035173012568345`*^-7, {5, 4}]}, {"13515/17443", 
+     PaddedForm[2.482514474940986*^-7, {5, 4}], 
+     PaddedForm[2.660451192476327*^-7, {5, 4}]}, {"13718/17705", 
+     PaddedForm[2.4407229589188795`*^-7, {5, 4}], 
+     PaddedForm[2.6186596757105964`*^-7, {5, 4}]}, {"13921/17967", 
+     PaddedForm[2.4001502750714633`*^-7, {5, 4}], 
+     PaddedForm[2.5780869911412434`*^-7, {5, 4}]}, {"14124/18229", 
+     PaddedForm[2.3607438689755716`*^-7, {5, 4}], 
+     PaddedForm[2.5386805843441676`*^-7, {5, 4}]}, {"14327/18491", 
+     PaddedForm[2.3224541666371959`*^-7, {5, 4}], 
+     PaddedForm[2.500390881324477*^-7, {5, 4}]}, {"14530/18753", 
+     PaddedForm[2.2852343609895873`*^-7, {5, 4}], 
+     PaddedForm[2.4631710750145916`*^-7, {5, 4}]}, {"14733/19015", 
+     PaddedForm[2.249040229915132*^-7, {5, 4}], 
+     PaddedForm[2.4269769432961103`*^-7, {5, 4}]}, {"14936/19277", 
+     PaddedForm[2.2138299514014266`*^-7, {5, 4}], 
+     PaddedForm[2.391766664155885*^-7, {5, 4}]}, {"15139/19539", 
+     PaddedForm[2.1795639487882251`*^-7, {5, 4}], 
+     PaddedForm[2.3575006609329655`*^-7, {5, 4}]}, {"15342/19801", 
+     PaddedForm[2.1462047360143878`*^-7, {5, 4}], 
+     PaddedForm[2.3241414475655455`*^-7, {5, 4}]}, {"15545/20063", 
+     PaddedForm[2.1137167915228003`*^-7, {5, 4}], 
+     PaddedForm[2.2916535024958781`*^-7, {5, 4}]}, {"15748/20325", 
+     PaddedForm[2.082066419269207*^-7, {5, 4}], 
+     PaddedForm[2.2600031296791088`*^-7, {5, 4}]}, {"15951/20587", 
+     PaddedForm[2.051221644120611*^-7, {5, 4}], 
+     PaddedForm[2.2291583539816713`*^-7, {5, 4}]}, {"16154/20849", 
+     PaddedForm[2.0211520929246872`*^-7, {5, 4}], 
+     PaddedForm[2.1990888022506997`*^-7, {5, 4}]}, {"16357/21111", 
+     PaddedForm[1.9918289028042687`*^-7, {5, 4}], 
+     PaddedForm[2.1697656116085142`*^-7, {5, 4}]}, {"16560/21373", 
+     PaddedForm[1.963224628018938*^-7, {5, 4}], 
+     PaddedForm[2.1411613363142086`*^-7, {5, 4}]}, {"16763/21635", 
+     PaddedForm[1.935313149692411*^-7, {5, 4}], 
+     PaddedForm[2.113249857491034*^-7, {5, 4}]}, {"16966/21897", 
+     PaddedForm[1.908069597003114*^-7, {5, 4}], 
+     PaddedForm[2.086006304316974*^-7, {5, 4}]}, {"17169/22159", 
+     PaddedForm[1.8814702827037426`*^-7, {5, 4}], 
+     PaddedForm[2.0594069895443034`*^-7, {5, 4}]}, {"17372/22421", 
+     PaddedForm[1.8554926171473467`*^-7, {5, 4}], 
+     PaddedForm[2.0334293235256697`*^-7, {5, 4}]}, {"17575/22683", 
+     PaddedForm[1.8301150638674712`*^-7, {5, 4}], 
+     PaddedForm[2.0080517697942346`*^-7, {5, 4}]}, {"17778/22945", 
+     PaddedForm[1.80531706220163*^-7, {5, 4}], 
+     PaddedForm[1.983253767687146*^-7, {5, 4}]}, {"17981/23207", 
+     PaddedForm[1.7810789843043474`*^-7, {5, 4}], 
+     PaddedForm[1.959015689358579*^-7, {5, 4}]}, {"18184/23469", 
+     PaddedForm[1.7573820778312118`*^-7, {5, 4}], 
+     PaddedForm[1.9353187824637885`*^-7, {5, 4}]}, {"18387/23731", 
+     PaddedForm[1.7342084186532225`*^-7, {5, 4}], 
+     PaddedForm[1.9121451228734546`*^-7, {5, 4}]}, {"18590/23993", 
+     PaddedForm[1.7115408650040313`*^-7, {5, 4}], 
+     PaddedForm[1.8894775688209248`*^-7, {5, 4}]}, {"18793/24255", 
+     PaddedForm[1.6893630173587833`*^-7, {5, 4}], 
+     PaddedForm[1.8672997207810513`*^-7, {5, 4}]}, {"18996/24517", 
+     PaddedForm[1.6676591740142566`*^-7, {5, 4}], 
+     PaddedForm[1.8455958770503337`*^-7, {5, 4}]}, {"19199/24779", 
+     PaddedForm[1.6464143009979932`*^-7, {5, 4}], 
+     PaddedForm[1.8243510036560464`*^-7, {5, 4}]}, {"19402/25041", 
+     PaddedForm[1.6256139919471364`*^-7, {5, 4}], 
+     PaddedForm[1.8035506942350757`*^-7, {5, 4}]}, {"19605/25303", 
+     PaddedForm[1.6052444365846603`*^-7, {5, 4}], 
+     PaddedForm[1.7831811385101502`*^-7, {5, 4}]}, {"19808/25565", 
+     PaddedForm[1.585292390628499*^-7, {5, 4}], 
+     PaddedForm[1.763229092198969*^-7, {5, 4}]}, {"20011/25827", 
+     PaddedForm[1.565745149999372*^-7, {5, 4}], 
+     PaddedForm[1.743681851222025*^-7, {5, 4}]}, {"20214/26089", 
+     PaddedForm[1.546590516431216*^-7, {5, 4}], 
+     PaddedForm[1.724527217313038*^-7, {5, 4}]}, {"20417/26351", 
+     PaddedForm[1.5278167802764014`*^-7, {5, 4}], 
+     PaddedForm[1.7057534808241694`*^-7, {5, 4}]}, {"20620/26613", 
+     PaddedForm[1.5094126918477595`*^-7, {5, 4}], 
+     PaddedForm[1.6873493920680516`*^-7, {5, 4}]}, {"20823/26875", 
+     PaddedForm[1.4913674413580028`*^-7, {5, 4}], 
+     PaddedForm[1.6693041412572036`*^-7, {5, 4}]}, {"21026/27137", 
+     PaddedForm[1.473670633127548*^-7, {5, 4}], 
+     PaddedForm[1.6516073327118577`*^-7, {5, 4}]}, {"21229/27399", 
+     PaddedForm[1.4563122726884298`*^-7, {5, 4}], 
+     PaddedForm[1.6342489719638704`*^-7, {5, 4}]}, {"21432/27661", 
+     PaddedForm[1.439282743857921*^-7, {5, 4}], 
+     PaddedForm[1.617219442830344*^-7, {5, 4}]}, {"21635/27923", 
+     PaddedForm[1.4225727886779537`*^-7, {5, 4}], 
+     PaddedForm[1.6005094873530452`*^-7, {5, 4}]}, {"21838/28185", 
+     PaddedForm[1.4061734959519284`*^-7, {5, 4}], 
+     PaddedForm[1.5841101943352164`*^-7, {5, 4}]}, {"22041/28447", 
+     PaddedForm[1.3900762811841348`*^-7, {5, 4}], 
+     PaddedForm[1.5680129792809942`*^-7, {5, 4}]}, {"22244/28709", 
+     PaddedForm[1.3742728751165611`*^-7, {5, 4}], 
+     PaddedForm[1.55220957293222*^-7, {5, 4}]}, {"22447/28971", 
+     PaddedForm[1.3587553065341115`*^-7, {5, 4}], 
+     PaddedForm[1.536692004073656*^-7, {5, 4}]}, {"22650/29233", 
+     PaddedForm[1.3435158879356195`*^-7, {5, 4}], 
+     PaddedForm[1.521452585203999*^-7, {5, 4}]}, {"22853/29495", 
+     PaddedForm[1.3285472098022536`*^-7, {5, 4}], 
+     PaddedForm[1.506483906804285*^-7, {5, 4}]}, {"23056/29757", 
+     PaddedForm[1.3138421205369356`*^-7, {5, 4}], 
+     PaddedForm[1.4917788172773098`*^-7, {5, 4}]}, {"23259/30019", 
+     PaddedForm[1.299393716434052*^-7, {5, 4}], 
+     PaddedForm[1.477330412917336*^-7, {5, 4}]}, {"23462/30281", 
+     PaddedForm[1.2851953359478573`*^-7, {5, 4}], 
+     PaddedForm[1.4631320321785003`*^-7, {5, 4}]}, {"23665/30543", 
+     PaddedForm[1.2712405453634892`*^-7, {5, 4}], 
+     PaddedForm[1.449177241345825*^-7, {5, 4}]}, {"23868/30805", 
+     PaddedForm[1.2575231287666769`*^-7, {5, 4}], 
+     PaddedForm[1.4354598245049296`*^-7, {5, 4}]}, {"24071/31067", 
+     PaddedForm[1.2440370808792494`*^-7, {5, 4}], 
+     PaddedForm[1.421973776377536*^-7, {5, 4}]}, {"24274/31329", 
+     PaddedForm[1.2307765955959456`*^-7, {5, 4}], 
+     PaddedForm[1.4087132908582794`*^-7, {5, 4}]}, {"24477/31591", 
+     PaddedForm[1.217736063118617*^-7, {5, 4}], 
+     PaddedForm[1.3956727581489118`*^-7, {5, 4}]}, {"24680/31853", 
+     PaddedForm[1.2049100541943426`*^-7, {5, 4}], 
+     PaddedForm[1.382846748996416*^-7, {5, 4}]}, {"24883/32115", 
+     PaddedForm[1.1922933201154294`*^-7, {5, 4}], 
+     PaddedForm[1.3702300146930048`*^-7, {5, 4}]}, {"25086/32377", 
+     PaddedForm[1.1798807783904263`*^-7, {5, 4}], 
+     PaddedForm[1.357817472747137*^-7, {5, 4}]}, {"25289/32639", 
+     PaddedForm[1.1676675127441228`*^-7, {5, 4}], 
+     PaddedForm[1.3456042068835149`*^-7, {5, 4}]}, "100000 \[CapitalOmega]", {
+    "1015/131", 
+     PaddedForm[-3.416030536137579*^-8, {5, 4}], 
+     PaddedForm[-1.6366638632982445`*^-8, {5, 4}]}, {"4091/528", 
+     PaddedForm[1.83178977268496*^-6, {5, 4}], 
+     PaddedForm[1.849583472615448*^-6, {5, 4}]}, {"5106/659", 
+     PaddedForm[1.4608649468326389`*^-6, {5, 4}], 
+     PaddedForm[1.4786586401630143`*^-6, {5, 4}]}, {"6121/790", 
+     PaddedForm[1.2129556962231761`*^-6, {5, 4}], 
+     PaddedForm[1.2307493851423367`*^-6, {5, 4}]}, {"7136/921", 
+     PaddedForm[1.0355700325234865`*^-6, {5, 4}], 
+     PaddedForm[1.0533637182863057`*^-6, {5, 4}]}, {"8151/1052", 
+     PaddedForm[9.023621672270947*^-7, {5, 4}], 
+     PaddedForm[9.201558506196574*^-7, {5, 4}]}, {"9166/1183", 
+     PaddedForm[7.986559593466077*^-7, {5, 4}], 
+     PaddedForm[8.164496408938565*^-7, {5, 4}]}, {"10181/1314", 
+     PaddedForm[7.156278538656291*^-7, {5, 4}], 
+     PaddedForm[7.334215339355035*^-7, {5, 4}]}, {"11196/1445", 
+     PaddedForm[6.476539791638032*^-7, {5, 4}], 
+     PaddedForm[6.654476580241731*^-7, {5, 4}]}, {"12211/1576", 
+     PaddedForm[5.909803299650793*^-7, {5, 4}], 
+     PaddedForm[6.087740078170171*^-7, {5, 4}]}, {"13226/1707", 
+     PaddedForm[5.43005272349065*^-7, {5, 4}], 
+     PaddedForm[5.607989493473506*^-7, {5, 4}]}, {"14241/1838", 
+     PaddedForm[5.018688791295338*^-7, {5, 4}], 
+     PaddedForm[5.196625553958522*^-7, {5, 4}]}, {"15256/1969", 
+     PaddedForm[4.662061960583656*^-7, {5, 4}], 
+     PaddedForm[4.839998716901141*^-7, {5, 4}]}, {"16271/2100", 
+     PaddedForm[4.349928570854387*^-7, {5, 4}], 
+     PaddedForm[4.5278653216178736`*^-7, {5, 4}]}, {"17286/2231", 
+     PaddedForm[4.074450918774742*^-7, {5, 4}], 
+     PaddedForm[4.252387664636471*^-7, {5, 4}]}, {"18301/2362", 
+     PaddedForm[3.829530059309315*^-7, {5, 4}], 
+     PaddedForm[4.0074668008130035`*^-7, {5, 4}]}, {"19316/2493", 
+     PaddedForm[3.6103489770021183`*^-7, {5, 4}], 
+     PaddedForm[3.7882857146057715`*^-7, {5, 4}]}, {"20331/2624", 
+     PaddedForm[3.413052591053843*^-7, {5, 4}], 
+     PaddedForm[3.5909893251468694`*^-7, {5, 4}]}, {"21346/2755", 
+     PaddedForm[3.2345190555294663`*^-7, {5, 4}], 
+     PaddedForm[3.4124557864457266`*^-7, {5, 4}]}, {"22361/2886", 
+     PaddedForm[3.072193347096284*^-7, {5, 4}], 
+     PaddedForm[3.2501300751241753`*^-7, {5, 4}]}, {"23376/3017", 
+     PaddedForm[2.923964201957706*^-7, {5, 4}], 
+     PaddedForm[3.101900927348057*^-7, {5, 4}]}, {"24391/3148", 
+     PaddedForm[2.7880717913285275`*^-7, {5, 4}], 
+     PaddedForm[2.966008514300854*^-7, {5, 4}]}, {"25406/3279", 
+     PaddedForm[2.6630375105482304`*^-7, {5, 4}], 
+     PaddedForm[2.8409742312957384`*^-7, {5, 4}]}, {"26421/3410", 
+     PaddedForm[2.547609970265702*^-7, {5, 4}], 
+     PaddedForm[2.7255466889593304`*^-7, {5, 4}]}, {"27436/3541", 
+     PaddedForm[2.440722959778619*^-7, {5, 4}], 
+     PaddedForm[2.618659676570336*^-7, {5, 4}]}, {"28451/3672", 
+     PaddedForm[2.3414624181467937`*^-7, {5, 4}], 
+     PaddedForm[2.5193991331723016`*^-7, {5, 4}]}, {"29466/3803", 
+     PaddedForm[2.2490402304882916`*^-7, {5, 4}], 
+     PaddedForm[2.42697694386927*^-7, {5, 4}]}, {"30481/3934", 
+     PaddedForm[2.1627732583676756`*^-7, {5, 4}], 
+     PaddedForm[2.340709970213648*^-7, {5, 4}]}, {"31496/4065", 
+     PaddedForm[2.0820664201289463`*^-7, {5, 4}], 
+     PaddedForm[2.260003130538848*^-7, {5, 4}]}, {"32511/4196", 
+     PaddedForm[2.0063989511171294`*^-7, {5, 4}], 
+     PaddedForm[2.1843356601806295`*^-7, {5, 4}]}, 
+    "1000000 \[CapitalOmega]", {"4029/52", 
+     PaddedForm[-1.928817307761181*^-6, {5, 4}], 
+     PaddedForm[-1.9110236747686105`*^-6, {5, 4}]}, {"6121/79", 
+     PaddedForm[1.212955696269029*^-6, {5, 4}], 
+     PaddedForm[1.2307493851652634`*^-6, {5, 4}]}, {"10150/131", 
+     PaddedForm[-3.4160305430154926`*^-8, {5, 4}], 
+     PaddedForm[-1.636663872468796*^-8, {5, 4}]}, {"16271/210", 
+     PaddedForm[4.34992857039586*^-7, {5, 4}], 
+     PaddedForm[4.527865320930083*^-7, {5, 4}]}, {"26421/341", 
+     PaddedForm[2.5476099709534934`*^-7, {5, 4}], 
+     PaddedForm[2.7255466894178585`*^-7, {5, 4}]}, 
+    "1000000 \[CapitalOmega]", {"4029/52", 
+     PaddedForm[-1.928817307761181*^-6, {5, 4}], 
+     PaddedForm[-1.9110236747686105`*^-6, {5, 4}]}, {"6121/79", 
+     PaddedForm[1.212955696269029*^-6, {5, 4}], 
+     PaddedForm[1.2307493851652634`*^-6, {5, 4}]}, {"10150/131", 
+     PaddedForm[-3.4160305430154926`*^-8, {5, 4}], 
+     PaddedForm[-1.636663872468796*^-8, {5, 4}]}, {"16271/210", 
+     PaddedForm[4.34992857039586*^-7, {5, 4}], 
+     PaddedForm[4.527865320930083*^-7, {5, 4}]}, {"26421/341", 
+     PaddedForm[2.5476099709534934`*^-7, {5, 4}], 
+     PaddedForm[2.7255466894178585`*^-7, {5, 4}]}}]]], "Output",
+ CellChangeTimes->{
+  3.732728694355955*^9, {3.7327287653680544`*^9, 3.732728789388386*^9}, {
+   3.732769395858593*^9, 3.732769409248457*^9}, {3.7327697079791555`*^9, 
+   3.732769715329169*^9}, 3.7328068953350325`*^9, 3.7328622624323606`*^9, 
+   3.7328623024256215`*^9, 3.732862904994079*^9, 3.732862999197789*^9, 
+   3.7328634457619967`*^9, 3.733037134408222*^9, 3.733037235577469*^9, 
+   3.7336550546914463`*^9, 3.733655406790906*^9, 3.7336556112282543`*^9, {
+   3.7336556627552547`*^9, 3.733655688145119*^9}, 3.733671701518142*^9, 
+   3.733671843919303*^9, 3.733671928858848*^9, {3.733672017942545*^9, 
+   3.7336720458237867`*^9}, {3.733672211623644*^9, 3.7336722287867146`*^9}, 
+   3.733672923283249*^9, 3.733677900227242*^9, 3.7336779322685547`*^9, 
+   3.733678014754881*^9, 
+   3.733678176347149*^9},ExpressionUUID->"09fb7755-488e-4c31-843f-\
+25837aa1bebd"]
+}, Open  ]]
+},
+WindowSize->{1920, 1037},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>1.2 Inherited,
+FrontEndVersion->"11.2 for Microsoft Windows (64-bit) (September 10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 837, 14, 84, "Input",ExpressionUUID->"73eb1f07-3fcf-4624-a9cf-85015922f5a4"],
+Cell[CellGroupData[{
+Cell[1420, 38, 1161, 25, 180, "Input",ExpressionUUID->"a72a5905-290d-45a6-952c-e8b80bcff0df"],
+Cell[2584, 65, 154, 3, 39, "Output",ExpressionUUID->"29dbf340-50f2-4fa0-83b4-0728cfab8efd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2775, 73, 7332, 148, 252, "Input",ExpressionUUID->"3cae23fb-7963-477c-8f58-91303ce52e9a"],
+Cell[10110, 223, 103852, 2996, 3964, "Output",ExpressionUUID->"09fb7755-488e-4c31-843f-25837aa1bebd"]
+}, Open  ]]
+}
+]
+*)
+
